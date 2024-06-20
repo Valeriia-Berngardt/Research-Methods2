@@ -22,7 +22,7 @@ tags: Analysis, Goals
 11.	On the computer select protocol - procedure - absorbance 595. Save in excel format
 
 ### (C)
-![alt text](picture/Picture1.png "Result of protein concentration analysis")
+![alt text](./2024-06-20-Bradford-protein-assay.md)
 
 ### (D)
 
