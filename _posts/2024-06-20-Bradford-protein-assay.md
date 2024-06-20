@@ -22,7 +22,7 @@ tags: Analysis, Goals
 11.	On the computer select protocol - procedure - absorbance 595. Save in excel format
 
 ### (C)
-![alt text](images/Picture1.png)
+![alt text](../images/Picture1.png)
 
 ### (D)
 
