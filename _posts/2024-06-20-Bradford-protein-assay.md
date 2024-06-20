@@ -8,7 +8,7 @@ tags: Analysis, Goals
 
 ### Bradford protein assay
 #### *Protocol*  
- ### (A-B) 
+### (A-B) 
  1.	Take a 96-well plate
 2.	Take out the standards, place on ice until completely thawed
 3.	Take the standards in the solution in which the assay is performed. In this case *RIPA*.
@@ -22,7 +22,7 @@ tags: Analysis, Goals
 11.	On the computer select protocol - procedure - absorbance 595. Save in excel format
 
 ### (C)
-![alt text](./2024-06-20-Bradford-protein-assay.md)
+![alt text](images/Picture1.png)
 
 ### (D)
 
