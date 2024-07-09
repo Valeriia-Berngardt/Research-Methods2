@@ -34,4 +34,4 @@ Finally, we performed quantification of gene expression. Absolute quantification
 | Genes           | Rac1 | RhoA | CDC42 | Rock1 | Vegf | VegfR | RhoGap24l/2 |
 |-----------------|------|------|-------|-------|------|-------|-------------|
 | RQ (Fold Change)| 0.72 | 0.94 | 1.17  | 0.70  | 1.03 | 0.69  | 0.32        |
-![alt text](../images/image_2024-07-09_15-44-44)
+![alt text](../images/image_2024-07-09_15-44-44.png)
