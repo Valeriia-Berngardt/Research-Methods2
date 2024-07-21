@@ -93,3 +93,24 @@ ggplot(Photosurvey, aes(x=Algae, y=Bryozoa))+
   geom_point()+
   geom_smooth(method='lm')+
   theme_simpsons()
+1. We study the data on the coverage of various taxonomic groups to understand how they are influenced by location, depth, and season. We use statistical methods and graphs to identify patterns and differences.
+
+2. Load necessary libraries for data analysis and visualization (`ggplot2`, `dplyr`, `tidyr`, etc.).
+
+3. Load metadata and coverage data from CSV files using `read.csv`.
+
+4. Create a plot of algae (Algae) coverage by sites (site) with color coding for depth (depth) using `ggplot2`.
+
+5. Perform Bartlett's test to check for homogeneity of variance.
+
+6. Use Kruskal-Wallis test to check for significant differences in algae coverage levels across sites.
+
+7. Create a plot of algae coverage by seasons (season) considering sites (site) and depth using `facet_grid`.
+
+8. Perform a multi-factor ANOVA (ANOVA) to assess the influence of site, depth, and season factors.
+
+9. Create a plot of algae coverage by samplers (sampler) and perform Bartlett's and Kruskal-Wallis tests to check for differences.
+
+10. Create a correlation plot between algae (Algae) and bryozoans (Bryozoa) with a linear regression line.
+
+11. This analysis helps understand the impact of various factors on the coverage of algae and other groups, and identify significant correlations between them. Visualization and statistical tests provide better insights into the data and reveal important trends.
