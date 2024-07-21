@@ -1,5 +1,12 @@
+---
+layout: post
+title: Data analysis and visualization
+date: '2024-07-21'
+categories: Data analysis and visualization
+tags: #vusualisation
+---
 
-# Data analysis and visualisation
+# Data analysis and visualization
 
 1. We study the data on the coverage of various taxonomic groups to understand how they are influenced by location, depth, and season. We use statistical methods and graphs to identify patterns and differences.
 
