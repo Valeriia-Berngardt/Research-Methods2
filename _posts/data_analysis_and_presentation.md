@@ -48,6 +48,9 @@ ggplot(Photosurvey, aes(x=site, y=Algae))+
   theme_simpsons()
 ```
 
+**Output:**
+
+![](../images/plot1.png)
 
 5. Perform Bartlett's test to check for homogeneity of variance.
 
@@ -56,11 +59,31 @@ ggplot(Photosurvey, aes(x=site, y=Algae))+
 bartlett.test(Photosurvey$Algae~Photosurvey$site)
 ```
 
+**Output:**
+
+```
+## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  Photosurvey$Algae by Photosurvey$site
+## Bartlett's K-squared = 0.79934, df = 1, p-value = 0.3713
+```
+
 6. Use Kruskal-Wallis test to check for significant differences in algae coverage levels across sites.
 
 ```
 #2 test difference in coverage levels
 kruskal.test(Algae~site, data=Photosurvey)
+```
+
+**Output:**
+
+```
+## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  Algae by site
+## Kruskal-Wallis chi-squared = 26.676, df = 1, p-value = 2.406e-07
 ```
 
 7. Create a plot of algae coverage by seasons (season) considering sites (site) and depth using `facet_grid`.
@@ -73,12 +96,37 @@ ggplot(Photosurvey, aes(x=season, y=Algae, fill=site))+
   facet_grid(.~depth)
 ```
 
+**Output:**
+
+![](../images/plot2.png)
+
 8. Perform a multi-factor ANOVA (ANOVA) to assess the influence of site, depth, and season factors.
 
 ```
 ### now let's test for all factors together- non-parametric anova
 m=art(Algae~site+as.factor(depth)+season+site*as.factor(depth)*season, data=Photosurvey)
 anova(m)
+```
+
+**Output:**
+
+```
+## Analysis of Variance of Aligned Rank Transformed Data
+## 
+## Table Type: Anova Table (Type III tests) 
+## Model: No Repeated Measures (lm)
+## Response: art(Algae)
+## 
+##                                Df Df.res F value     Pr(>F)    
+## 1 site                          1    328 47.8826 2.3838e-11 ***
+## 2 as.factor(depth)              2    328 74.0189 < 2.22e-16 ***
+## 3 season                        1    328  3.0259 0.08288042   .
+## 4 site:as.factor(depth)         2    328  2.8709 0.05807000   .
+## 5 site:season                   1    328  2.3674 0.12485573    
+## 6 as.factor(depth):season       2    328  9.2187 0.00012731 ***
+## 7 site:as.factor(depth):season  2    328  1.3538 0.25970632    
+## ---
+## Signif. codes:   0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
 9. Create a plot of algae coverage by samplers (sampler) and perform Bartlett's and Kruskal-Wallis tests to check for differences.
@@ -90,13 +138,42 @@ ggplot(Photosurvey, aes(x=sampler, y=Algae))+
   geom_boxplot(outlier.shape = NA)+
   geom_point(aes(color=as.factor(depth)),position=position_jitter(width=0.2))+
   theme_simpsons()
+```
+
+**Output:**
+
+![](../images/plot3.png)
+
+```
 #1. test homogeneity of variance
 
 bartlett.test(Photosurvey$Algae~Photosurvey$sampler)
+```
 
+**Output:**
+
+```
+## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  Photosurvey$Algae by Photosurvey$sampler
+## Bartlett's K-squared = 0.68449, df = 1, p-value = 0.408
+```
+
+```
 #2) test difference in coverage levels
 
 kruskal.test(Algae~sampler, data=Photosurvey)
+```
+
+**Output:**
+
+```
+## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  Algae by sampler
+## Kruskal-Wallis chi-squared = 10.049, df = 1, p-value = 0.001524
 ```
 
 10. Create a correlation plot between algae (Algae) and bryozoans (Bryozoa) with a linear regression line.
@@ -119,9 +196,6 @@ flattenCorrMatrix <- function(cormat, pmat) {
 #now we apply this function to our data
 corrs_flat=flattenCorrMatrix(corrs$r, corrs$P)
 
-corrs_flat
-
-
 #add p value adjustment using the Benjamini-Hochber method (BH)
 corrs_flat$p.adj=p.adjust(corrs_flat$p, "BH")
 
@@ -133,6 +207,9 @@ ggplot(Photosurvey, aes(x=Algae, y=Bryozoa))+
   theme_simpsons()
 ```
 
+**Output:**
+
+![](../images/plot3.png)
 
 11. This analysis helps understand the impact of various factors on the coverage of algae and other groups, and identify significant correlations between them. Visualization and statistical tests provide better insights into the data and reveal important trends.
 
