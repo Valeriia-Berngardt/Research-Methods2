@@ -1,0 +1,95 @@
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(broom)
+library(grid)
+library(cowplot)
+library(corrplot)
+library(Hmisc)
+library(ARTool)
+
+# install.packages("remotes")
+# remotes::install_github("MatthewBJane/ThemePark")
+library(ThemePark)
+
+
+# Load data
+photo_metadata=read.csv("~/Documents/GitHub/Research-Methods-Valeriia/Photosurvey_metadata (1).csv", header=TRUE, row.names=1, stringsAsFactors = TRUE)
+str(photo_metadata)
+
+# load the processed and filtered coverage data by taxonomic group
+photosurvey_coverage=read.csv("~/Documents/GitHub/Research-Methods-Valeriia/Photosurvey_processed_data (1).csv", header=TRUE, row.names=1, stringsAsFactors = TRUE)
+str(photosurvey_coverage)
+
+#make sure the order of trnasect_IDs is the same in the data and the metadata
+ord=match(row.names(photosurvey_coverage), row.names(photo_metadata))
+photo_metadata=photo_metadata[ord,]
+
+#merge metadata and coverage values
+Photosurvey=cbind(photo_metadata, photosurvey_coverage)
+str(Photosurvey)
+# let's look at the total coverage in relation to site
+ggplot(Photosurvey, aes(x=site, y=Algae))+
+  geom_boxplot(outlier.shape = NA)+
+  geom_point(aes(color=as.factor(depth)),position=position_jitter(width=0.2))+ 
+  theme_simpsons()
+
+#1. test homogeneity of variance
+bartlett.test(Photosurvey$Algae~Photosurvey$site)
+#2) test difference in coverage levels
+kruskal.test(Algae~site, data=Photosurvey)
+
+ggplot(Photosurvey, aes(x=season, y=Algae, fill=site))+
+  geom_boxplot(outlier.shape = NA)+
+  geom_point(position=position_jitterdodge(jitter.width = 0.2), size=1)+
+  theme_simpsons() +
+  facet_grid(.~depth)
+### now let's test for all factors together- non-parametric anova
+m=art(Algae~site+as.factor(depth)+season+site*as.factor(depth)*season, data=Photosurvey)
+anova(m)
+
+
+### let's examine the sampler....
+
+ggplot(Photosurvey, aes(x=sampler, y=Algae))+
+  geom_boxplot(outlier.shape = NA)+
+  geom_point(aes(color=as.factor(depth)),position=position_jitter(width=0.2))+
+  theme_simpsons()
+#1. test homogeneity of variance
+
+bartlett.test(Photosurvey$Algae~Photosurvey$sampler)
+
+#2) test difference in coverage levels
+
+kruskal.test(Algae~sampler, data=Photosurvey)
+
+
+corrs=rcorr(as.matrix(Photosurvey[,10:22]), type="spearman")
+
+#we need a function that will take the square matrix and turn it to long format.
+
+flattenCorrMatrix <- function(cormat, pmat) {
+  ut <- upper.tri(cormat)
+  data.frame(
+    row = rownames(cormat)[row(cormat)[ut]],
+    column = rownames(cormat)[col(cormat)[ut]],
+    cor  =(cormat)[ut],
+    p = pmat[ut]
+  )
+}
+
+#now we apply this function to our data
+corrs_flat=flattenCorrMatrix(corrs$r, corrs$P)
+
+corrs_flat
+
+
+#add p value adjustment using the Benjamini-Hochber method (BH)
+corrs_flat$p.adj=p.adjust(corrs_flat$p, "BH")
+
+# now plot your correlation of interest e.g., my taxon of interest and live coverage
+
+ggplot(Photosurvey, aes(x=Algae, y=Bryozoa))+
+  geom_point()+
+  geom_smooth(method='lm')+
+  theme_simpsons()
